@@ -93,6 +93,7 @@ public class FrmMain extends JFrame {
 		chkPartizionamentoPerMese.setFont(DEFAULT_FONT());
 		
 		JCheckBox chkALLView = new JCheckBox("Generazione vista _ALL");
+		chkALLView.setFont(new Font("Tahoma", Font.PLAIN, 11));
 		chkALLView.setSelected(true);
 		chkALLView.setBounds(6, 71, 173, 23);
 		panel_1.add(chkALLView);
@@ -180,7 +181,7 @@ public class FrmMain extends JFrame {
 				_rtSql.getRootPane().updateUI();
 				try {
 					String aTableName = (String) _cmbTables.getSelectedItem();
-					sql = pkg_model.TableModel.CreatabellaODS(aTableName, isPartizionamentoPerMESE);
+					sql = pkg_model.TableModel.CreatabellaODS(aTableName, isPartizionamentoPerMESE,createALLView);
 				} catch (Exception e1) {
 					e1.printStackTrace();
 				}
