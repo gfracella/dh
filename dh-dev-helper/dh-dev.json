@@ -1,0 +1,6 @@
+{
+	"TNS_NAME": "SRVTS2A_S2A_APP",
+	"PROXY_USER": "S2A",
+	"WALLET_LOCATION": "C:\\Users\\fce458\\Documents\\Apps\\oracle\\OracleDeveloper\\instantclient\\network\\admin",
+	"TNS_ADMIN_LOCATION": "C:\\Users\\fce458\\Documents\\Apps\\oracle\\OracleDeveloper\\instantclient\\network\\admin"
+}

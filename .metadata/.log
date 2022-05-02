@@ -1,0 +1,203 @@
+
+!ENTRY org.springframework.tooling.ls.eclipse.commons 1 0 2022-04-27 12:27:56.089
+!MESSAGE Entering DelegatingStreamConnectionProvider()
+
+!ENTRY org.springframework.tooling.ls.eclipse.commons 1 0 2022-04-27 12:27:56.094
+!MESSAGE DelegatingStreamConnectionProvider classloader = org.eclipse.osgi.internal.loader.EquinoxClassLoader@347fa6bd[org.springframework.tooling.boot.ls:1.33.0.202204250653(id=519)]
+
+!ENTRY org.springframework.tooling.ls.eclipse.commons 1 0 2022-04-27 12:27:56.103
+!MESSAGE SpringBootLanguageServer exists!
+
+!ENTRY org.springframework.tooling.ls.eclipse.commons 1 0 2022-04-27 12:27:56.245
+!MESSAGE Instantiating ReusableClasspathListenerHandler
+
+!ENTRY org.springframework.tooling.ls.eclipse.commons 1 0 2022-04-27 12:28:01.115
+!MESSAGE Boot LS startup time from start to initialized: 4991ms
+
+!ENTRY org.springframework.tooling.ls.eclipse.commons 1 0 2022-04-27 12:28:02.255
+!MESSAGE ClasspathListenerHandler addClasspathListener sts4.classpath.xybeHtFBisBatched = true
+
+!ENTRY org.springframework.tooling.ls.eclipse.commons 1 0 2022-04-27 12:28:02.262
+!MESSAGE Setting up ClasspathListenerManager
+
+!ENTRY org.springframework.tooling.ls.eclipse.commons 1 0 2022-04-27 12:28:02.305
+!MESSAGE Scheduling initial event for all projects ...
+
+!ENTRY org.springframework.tooling.ls.eclipse.commons 1 0 2022-04-27 12:28:02.312
+!MESSAGE Scheduling initial event for all projects DONE
+
+!ENTRY org.springframework.tooling.ls.eclipse.commons 1 0 2022-04-27 12:28:02.317
+!MESSAGE exists = true open = true => deleted = false
+
+!ENTRY org.springframework.tooling.ls.eclipse.commons 1 0 2022-04-27 12:28:02.323
+!MESSAGE ClasspathListenerHandler addClasspathListener sts4.classpath.xybeHtFB => OK
+
+!ENTRY org.springframework.tooling.ls.eclipse.commons 1 0 2022-04-27 12:28:02.329
+!MESSAGE classpath=27 entries
+
+!ENTRY org.springframework.tooling.ls.eclipse.commons 1 0 2022-04-27 12:28:02.340
+!MESSAGE buffering callback sts4.classpath.xybeHtFB dh-dev-helper false 22
+
+!ENTRY org.springframework.tooling.ls.eclipse.commons 1 0 2022-04-27 12:28:02.347
+!MESSAGE executing callback sts4.classpath.xybeHtFB 1 batched events
+
+!ENTRY org.springframework.tooling.ls.eclipse.commons 1 0 2022-04-27 12:28:02.868
+!MESSAGE executing callback sts4.classpath.xybeHtFB SUCCESS [done]
+
+!ENTRY org.eclipse.ui 2 2 2022-04-27 12:28:04.675
+!MESSAGE Invalid property category path: org.springframework.ide.eclipse.beans.ui.properties.ProjectPropertyPage (bundle: org.springframework.ide.eclipse.xml.namespaces, propertyPage: org.springframework.ide.eclipse.beans.ui.namespaces.projectPropertyPage)
+
+!ENTRY org.eclipse.m2e.logback.appender 2 0 2022-04-27 12:28:30.992
+!MESSAGE Using platform encoding (Cp1252 actually) to copy filtered resources, i.e. build is platform dependent!
+
+!ENTRY org.eclipse.m2e.logback.appender 2 0 2022-04-27 12:28:31.002
+!MESSAGE Using platform encoding (Cp1252 actually) to copy filtered resources, i.e. build is platform dependent!
+
+!ENTRY org.eclipse.m2e.logback.appender 2 0 2022-04-27 12:28:45.131
+!MESSAGE Using platform encoding (Cp1252 actually) to copy filtered resources, i.e. build is platform dependent!
+
+!ENTRY org.eclipse.m2e.logback.appender 2 0 2022-04-27 12:28:45.143
+!MESSAGE Using platform encoding (Cp1252 actually) to copy filtered resources, i.e. build is platform dependent!
+
+!ENTRY org.springframework.tooling.ls.eclipse.commons 1 0 2022-04-27 12:29:07.503
+!MESSAGE ClasspathListenerHandler removeClasspathListener sts4.classpath.xybeHtFB
+
+!ENTRY org.springframework.tooling.ls.eclipse.commons 1 0 2022-04-27 12:29:07.511
+!MESSAGE unsubscribing from classpath changes: sts4.classpath.xybeHtFB
+
+!ENTRY org.springframework.tooling.ls.eclipse.commons 1 0 2022-04-27 12:29:07.518
+!MESSAGE subsribers = {}
+
+!ENTRY org.springframework.tooling.ls.eclipse.commons 1 0 2022-04-27 12:29:07.524
+!MESSAGE ClasspathListenerHandler removeClasspathListener sts4.classpath.xybeHtFB => OK
+!SESSION 2022-05-02 08:36:38.055 -----------------------------------------------
+eclipse.buildId=4.23.0.I20220308-0310
+java.version=16.0.2
+java.vendor=Oracle Corporation
+BootLoader constants: OS=win32, ARCH=x86_64, WS=win32, NL=it_IT
+Framework arguments:  -product org.eclipse.epp.package.java.product -product org.eclipse.epp.package.java.product
+Command-line arguments:  -os win32 -ws win32 -arch x86_64 -product org.eclipse.epp.package.java.product -data C:\Users\fce458\Documents\Apps\SVI\eclipse-workspace\dh -product org.eclipse.epp.package.java.product
+
+!ENTRY org.eclipse.jface 2 0 2022-05-02 08:36:45.127
+!MESSAGE Keybinding conflicts occurred.  They may interfere with normal accelerator operation.
+!SUBENTRY 1 org.eclipse.jface 2 0 2022-05-02 08:36:45.127
+!MESSAGE A conflict occurred for CTRL+SHIFT+T:
+Binding(CTRL+SHIFT+T,
+	ParameterizedCommand(Command(org.eclipse.jdt.ui.navigate.open.type,Open Type,
+		Open a type in a Java editor,
+		Category(org.eclipse.ui.category.navigate,Navigate,null,true),
+		org.eclipse.ui.internal.WorkbenchHandlerServiceHandler@5606d537,
+		,,true),null),
+	org.eclipse.ui.defaultAcceleratorConfiguration,
+	org.eclipse.ui.contexts.window,,,system)
+Binding(CTRL+SHIFT+T,
+	ParameterizedCommand(Command(org.eclipse.lsp4e.symbolinworkspace,Go to Symbol in Workspace,
+		,
+		Category(org.eclipse.lsp4e.category,Language Servers,null,true),
+		org.eclipse.ui.internal.WorkbenchHandlerServiceHandler@b5390,
+		,,true),null),
+	org.eclipse.ui.defaultAcceleratorConfiguration,
+	org.eclipse.ui.contexts.window,,,system)
+!SUBENTRY 1 org.eclipse.jface 2 0 2022-05-02 08:36:45.127
+!MESSAGE A conflict occurred for ALT+SHIFT+R:
+Binding(ALT+SHIFT+R,
+	ParameterizedCommand(Command(org.eclipse.jdt.ui.edit.text.java.rename.element,Rename - Refactoring ,
+		Rename the selected element,
+		Category(org.eclipse.jdt.ui.category.refactoring,Refactor - Java,Java Refactoring Actions,true),
+		org.eclipse.ui.internal.WorkbenchHandlerServiceHandler@59831016,
+		,,true),null),
+	org.eclipse.ui.defaultAcceleratorConfiguration,
+	org.eclipse.ui.contexts.window,,,system)
+Binding(ALT+SHIFT+R,
+	ParameterizedCommand(Command(org.eclipse.ui.edit.rename,Rename,
+		Rename the selected item,
+		Category(org.eclipse.ui.category.file,File,null,true),
+		org.eclipse.ui.internal.WorkbenchHandlerServiceHandler@37f71e8,
+		,,true),null),
+	org.eclipse.ui.defaultAcceleratorConfiguration,
+	org.eclipse.ui.contexts.window,,,system)
+
+!ENTRY org.springframework.tooling.ls.eclipse.commons 1 0 2022-05-02 08:36:52.132
+!MESSAGE Entering DelegatingStreamConnectionProvider()
+
+!ENTRY org.springframework.tooling.ls.eclipse.commons 1 0 2022-05-02 08:36:52.138
+!MESSAGE DelegatingStreamConnectionProvider classloader = org.eclipse.osgi.internal.loader.EquinoxClassLoader@5041e5f[org.springframework.tooling.boot.ls:1.33.0.202204250653(id=519)]
+
+!ENTRY org.springframework.tooling.ls.eclipse.commons 1 0 2022-05-02 08:36:52.146
+!MESSAGE SpringBootLanguageServer exists!
+
+!ENTRY org.springframework.tooling.ls.eclipse.commons 1 0 2022-05-02 08:36:52.204
+!MESSAGE Instantiating ReusableClasspathListenerHandler
+
+!ENTRY org.eclipse.egit.ui 2 0 2022-05-02 08:36:54.841
+!MESSAGE Warning: The environment variable HOME is not set. The following directory will be used to store the Git
+user global configuration and to define the default location to store repositories: 'C:\Users\fce458'. If this is
+not correct please set the HOME environment variable and restart Eclipse. Otherwise Git for Windows and
+EGit might behave differently since they see different configuration options.
+This warning can be switched off on the Team > Git > Confirmations and Warnings preference page.
+
+!ENTRY org.springframework.tooling.ls.eclipse.commons 1 0 2022-05-02 08:36:57.931
+!MESSAGE Boot LS startup time from start to initialized: 5765ms
+
+!ENTRY org.springframework.tooling.ls.eclipse.commons 1 0 2022-05-02 08:36:58.174
+!MESSAGE ClasspathListenerHandler addClasspathListener sts4.classpath.icgTmJmOisBatched = true
+
+!ENTRY org.springframework.tooling.ls.eclipse.commons 1 0 2022-05-02 08:36:58.185
+!MESSAGE Setting up ClasspathListenerManager
+
+!ENTRY org.springframework.tooling.ls.eclipse.commons 1 0 2022-05-02 08:36:58.194
+!MESSAGE Scheduling initial event for all projects ...
+
+!ENTRY org.springframework.tooling.ls.eclipse.commons 1 0 2022-05-02 08:36:58.202
+!MESSAGE Scheduling initial event for all projects DONE
+
+!ENTRY org.springframework.tooling.ls.eclipse.commons 1 0 2022-05-02 08:36:58.210
+!MESSAGE exists = true open = true => deleted = false
+
+!ENTRY org.springframework.tooling.ls.eclipse.commons 1 0 2022-05-02 08:36:58.215
+!MESSAGE ClasspathListenerHandler addClasspathListener sts4.classpath.icgTmJmO => OK
+
+!ENTRY org.springframework.tooling.ls.eclipse.commons 1 0 2022-05-02 08:36:58.225
+!MESSAGE classpath=27 entries
+
+!ENTRY org.springframework.tooling.ls.eclipse.commons 1 0 2022-05-02 08:36:58.234
+!MESSAGE buffering callback sts4.classpath.icgTmJmO dh-dev-helper false 22
+
+!ENTRY org.springframework.tooling.ls.eclipse.commons 1 0 2022-05-02 08:36:58.239
+!MESSAGE executing callback sts4.classpath.icgTmJmO 1 batched events
+
+!ENTRY org.springframework.tooling.ls.eclipse.commons 1 0 2022-05-02 08:36:58.670
+!MESSAGE executing callback sts4.classpath.icgTmJmO SUCCESS [done]
+
+!ENTRY org.eclipse.ui 2 2 2022-05-02 08:37:10.192
+!MESSAGE Invalid property category path: org.springframework.ide.eclipse.beans.ui.properties.ProjectPropertyPage (bundle: org.springframework.ide.eclipse.xml.namespaces, propertyPage: org.springframework.ide.eclipse.beans.ui.namespaces.projectPropertyPage)
+
+!ENTRY org.eclipse.m2e.logback.appender 2 0 2022-05-02 08:39:47.800
+!MESSAGE Using platform encoding (Cp1252 actually) to copy filtered resources, i.e. build is platform dependent!
+
+!ENTRY org.eclipse.m2e.logback.appender 2 0 2022-05-02 08:39:47.809
+!MESSAGE Using platform encoding (Cp1252 actually) to copy filtered resources, i.e. build is platform dependent!
+
+!ENTRY org.eclipse.m2e.logback.appender 2 0 2022-05-02 08:46:44.192
+!MESSAGE Using platform encoding (Cp1252 actually) to copy filtered resources, i.e. build is platform dependent!
+
+!ENTRY org.eclipse.m2e.logback.appender 2 0 2022-05-02 08:46:44.200
+!MESSAGE Using platform encoding (Cp1252 actually) to copy filtered resources, i.e. build is platform dependent!
+
+!ENTRY org.eclipse.m2e.logback.appender 2 0 2022-05-02 09:36:16.083
+!MESSAGE Using platform encoding (Cp1252 actually) to copy filtered resources, i.e. build is platform dependent!
+
+!ENTRY org.eclipse.m2e.logback.appender 2 0 2022-05-02 09:36:16.091
+!MESSAGE Using platform encoding (Cp1252 actually) to copy filtered resources, i.e. build is platform dependent!
+
+!ENTRY org.springframework.tooling.ls.eclipse.commons 1 0 2022-05-02 09:36:16.333
+!MESSAGE ClasspathListenerHandler removeClasspathListener sts4.classpath.icgTmJmO
+
+!ENTRY org.springframework.tooling.ls.eclipse.commons 1 0 2022-05-02 09:36:16.339
+!MESSAGE unsubscribing from classpath changes: sts4.classpath.icgTmJmO
+
+!ENTRY org.springframework.tooling.ls.eclipse.commons 1 0 2022-05-02 09:36:16.344
+!MESSAGE subsribers = {}
+
+!ENTRY org.springframework.tooling.ls.eclipse.commons 1 0 2022-05-02 09:36:16.347
+!MESSAGE ClasspathListenerHandler removeClasspathListener sts4.classpath.icgTmJmO => OK
