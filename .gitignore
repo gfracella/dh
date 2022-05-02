@@ -1,3 +1,5 @@
 dh-dev-helper/target/classes/*.class
 dh-dev-helper/target/classes/pkg_model/*.class
 .metadata/
+dh-dev-helper/dh-dev-helper.bat
+dh-dev-helper/dh-dev-helper.jar
