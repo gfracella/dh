@@ -32,9 +32,9 @@ public class TableBDTModel extends TableModel {
 
 		}
 		if (getIsPartizionamentoMensile())
-			return abif + "," + calf + s + "," + dtvf + ",MESE";
+			return "MESE," + calf + "," + abif + s + "," + dtvf;
 		else
-			return abif + "," + calf + s + "," + dtvf + ",ANNO";
+			return "ANNO," + calf + "," + abif + s + "," + dtvf;
 	}
 
 	public FieldModel Field_CAL_DATE() throws Exception {

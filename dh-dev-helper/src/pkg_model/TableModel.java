@@ -137,24 +137,25 @@ public class TableModel {
 		throw new Exception("Attenzione: la tabella non ha il campo ABI");
 	}
 
-	public String PrimaryKey() {
+	public String PrimaryKey() throws Exception {
 
-		String dtvField = "";
 		String s = "";
+		
+		if (getIsPartizionamentoMensile())
+			s = "MESE,";
+		else
+			s = "ANNO,";
+		s += Field_DTV().getName();
+
 		for (FieldModel f : getFields()) {
 			if (f.getIsKey()) {
-				if (f.getName().endsWith("DTV")) {
-					dtvField = f.NameQuoted();
+				if (f.getName().endsWith("DTV")) {				
 					continue;
 				}
-				s += f.NameQuoted() + ",";
+				s += ","+ f.NameQuoted();
 			}
 		}
-		s += dtvField;
-		if (getIsPartizionamentoMensile())
-			s += ", MESE";
-		else
-			s += ", ANNO";
+
 		return s;
 	}
 
@@ -342,21 +343,10 @@ public class TableModel {
 
 		sql += String.format(" TABLESPACE %s;", tableSpaceName);
 
-		sql += String.format(Util.newLine + "CREATE UNIQUE INDEX S2A.%s ON %s (%s) LOCAL", t.PrimaryKeyName(), t.getName(), t.PrimaryKey());
+		sql += String.format(Util.newLine + "CREATE UNIQUE INDEX S2A.%s ON %s (%s) COMPRESS ADVANCED HIGH LOCAL", t.PrimaryKeyName(), t.getName(), t.PrimaryKey());
 		sql += String.format(" TABLESPACE %s;", tableSpaceName);
 
 		sql += String.format(Util.newLine + "ALTER TABLE S2A.%s ADD CONSTRAINT %s PRIMARY KEY (%s) USING INDEX %s  ENABLE;", t.getName(), t.PrimaryKeyName(), t.PrimaryKey(), t.PrimaryKeyName());
-
-		sql += Util.newLine + String.format("CREATE INDEX  S2A.%s_IDX100 ON %s (%s,%s", t.getName(), t.getName(), t.Field_ABI().getName(), t.Field_DTV().getName());
-		for (FieldModel f : t.Fields_NoABI_NoDTV())
-			if (f.getIsKey())
-				sql += String.format(",%s", f.getName());
-		if (isPartizionamentoPerMESE)
-			sql += ",MESE) LOCAL";
-		else
-			sql += ",ANNO) LOCAL";
-
-		sql += String.format(" TABLESPACE %s;", tableSpaceName);
 
 		if (t.isGiornaliera()) // Creazione tabella BDT
 		{
@@ -387,7 +377,7 @@ public class TableModel {
 
 			sql += String.format("(PARTITION \"%s_P1\" VALUES((TO_DATE('01/01/2021', 'DD/MM/YYYY'), '03599')))", bdt.getName());
 			sql += String.format(" TABLESPACE %s;", tableSpaceName);
-			sql += String.format(Util.newLine + "CREATE UNIQUE INDEX S2A.%s ON %s (%s) LOCAL", bdt.PrimaryKeyName(), bdt.getName(), bdt.PrimaryKey());
+			sql += String.format(Util.newLine + "CREATE UNIQUE INDEX S2A.%s ON %s (%s) COMPRESS ADVANCED HIGH LOCAL", bdt.PrimaryKeyName(), bdt.getName(), bdt.PrimaryKey());
 			sql += String.format(" TABLESPACE %s;", tableSpaceName);
 			sql += String.format(Util.newLine + "ALTER TABLE S2A.%s ADD CONSTRAINT %s PRIMARY KEY (%s) USING INDEX %s  ENABLE;", bdt.getName(), bdt.PrimaryKeyName(), bdt.PrimaryKey(), bdt.PrimaryKeyName());
 
@@ -543,9 +533,7 @@ public class TableModel {
 						sql += String.format(Util.newLine + "COMMENT ON COLUMN %s.%s  IS '%s'; ", t.ViewNameQuoted(), f.getNameS2A(), f.getDescription());
 				sql += Util.newLine;
 				sql += Util.getViewGrantString(t.getViewName(), true);
-			}
-			else
-			{
+			} else {
 				sql += Util.newLine + " -- Vista con suffisso _ALL NON visibile alle banche";
 				sql += Util.newLine + " --" + t.getViewName_ALL() + " - " + t.getDescription() + " (Mensile)";
 				sql += Util.newLine + "------------------------------------------------------------------------------------------";
@@ -558,7 +546,8 @@ public class TableModel {
 						sql += String.format(Util.newLine + " %s%s %s ", bComma, f.getName(), f.getNameS2A());
 						bComma = ",";
 					}
-				//sql += String.format(Util.newLine + " FROM  %s WHERE %s IN (SELECT ABI FROM GET_ABI())", t.getName(), t.Field_ABI().getName());
+				// sql += String.format(Util.newLine + " FROM %s WHERE %s IN (SELECT ABI FROM
+				// GET_ABI())", t.getName(), t.Field_ABI().getName());
 				sql += String.format(Util.newLine + " FROM  %s ", t.getName());
 
 				sql += Util.newLine + ") WITH CHECK OPTION;" + Util.newLine;
@@ -571,7 +560,6 @@ public class TableModel {
 				sql += Util.newLine;
 				sql += Util.getViewGrantString(t.getViewName(), false);
 
-				
 				sql += Util.newLine + " --Vista senza suffisso _ALL visibile alle banche";
 				sql += Util.newLine + " --" + t.getViewName() + " - " + t.getDescription() + " (Mensile)";
 				sql += Util.newLine + "------------------------------------------------------------------------------------------";
@@ -587,7 +575,7 @@ public class TableModel {
 						sql += String.format(Util.newLine + "COMMENT ON COLUMN %s.%s  IS '%s'; ", t.ViewNameQuoted(), f.getNameS2A(), f.getDescription());
 				sql += Util.newLine;
 				sql += Util.getViewGrantString(t.getViewName(), true);
-				
+
 			}
 
 			sql += Util.newLine;
@@ -727,7 +715,7 @@ public class TableModel {
 		sql += String.format(
 				"ALTER TABLE S2A.DTO_FTNSR001_%s ADD CONSTRAINT DTO_FTNSR001_%s_PK PRIMARY KEY (REMOTE_FILE_NAME, LOCAL_FILE_NAME, ROW_ID, ANNO, ABI_BANCA) USING INDEX DTO_FTNSR001_%s_PK ENABLE;" + Util.newLine,
 				t.getDTOName(), t.getDTOName(), t.getDTOName());
-		sql += String.format("CREATE INDEX  S2A.%s_IDX100 ON DTO_FTNSR001_%s (ABI_BANCA, DATA_RIFERIMENTO, ANNO) LOCAL TABLESPACE %s;" + Util.newLine, t.getDTOName(), t.getDTOName(), tableSpaceName);
+		sql += String.format("CREATE INDEX  S2A.%s_IDX100 ON DTO_FTNSR001_%s (ANNO, DATA_RIFERIMENTO, ABI_BANCA) COMPRESS ADVANCED HIGH LOCAL TABLESPACE %s;" + Util.newLine, t.getDTOName(), t.getDTOName(), tableSpaceName);
 
 		sql += Util.newLine + "--------------------------------------------------------" + Util.newLine;
 		sql += String.format("--Constraints for Table DTO_FTNSR001_%s  " + Util.newLine, t.getDTOName());
