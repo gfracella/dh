@@ -484,7 +484,7 @@ public class TableModel {
 							sql += String.format(Util.newLine + "COMMENT ON COLUMN %s.%s  IS '%s'; ", t.ViewName_ALLQuoted(), f.getNameS2A(), f.getDescription());
 					sql += Util.newLine;
 
-					sql += Util.getViewGrantString(t.getViewName(), false);
+					sql += Util.getViewGrantString(t.getViewName_ALL(), false);
 
 					// Vista senza suffisso _ALL
 					sql += Util.newLine + " --Vista senza suffisso _ALL visibile alle banche";
@@ -558,7 +558,7 @@ public class TableModel {
 					if (f.getIsAnalitycs())
 						sql += String.format(Util.newLine + "COMMENT ON COLUMN %s.%s  IS '%s'; ", t.ViewName_ALLQuoted(), f.getNameS2A(), f.getDescription());
 				sql += Util.newLine;
-				sql += Util.getViewGrantString(t.getViewName(), false);
+				sql += Util.getViewGrantString(t.getViewName_ALL(), false);
 
 				sql += Util.newLine + " --Vista senza suffisso _ALL visibile alle banche";
 				sql += Util.newLine + " --" + t.getViewName() + " - " + t.getDescription() + " (Mensile)";
