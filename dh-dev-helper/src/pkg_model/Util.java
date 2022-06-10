@@ -61,6 +61,8 @@ public class Util {
 		sql += String.format("GRANT SELECT ON S2A.%s TO EDCDISCOVERY;" + newLine, name);
 		sql += "-- S2A_ERMAS_AP: Utente per ERMAS \n";
 		sql += String.format("GRANT SELECT ON S2A.%s TO S2A_ERMAS_AP;" + newLine, name);
+		sql += "-- DATALAYER: Utente per DATALAYER \n";
+		sql += String.format("GRANT SELECT ON S2A.%s TO DATALAYER WITH GRANT OPTION;" + newLine, name);
 		return sql;
 	}
 

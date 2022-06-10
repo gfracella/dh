@@ -417,7 +417,7 @@ public class TableModel {
 				if (!createALLView) {
 					sql += Util.newLine + " -- " + t.getViewName() + " - " + t.getDescription() + " (Giornaliero)";
 					sql += Util.newLine + "------------------------------------------------------------------------------------------";
-					sql += Util.newLine + String.format("CREATE OR REPLACE VIEW %s AS ", t.getViewName());
+					sql += Util.newLine + String.format("CREATE OR REPLACE VIEW BEQUEATH DEFINER %s AS ", t.getViewName());
 					sql += Util.newLine + "(";
 					sql += Util.newLine + " SELECT";
 					bComma = "";
@@ -454,7 +454,7 @@ public class TableModel {
 					sql += Util.newLine + " -- Vista con suffisso _ALL NON visibile alle banche";
 					sql += Util.newLine + " -- " + t.getViewName_ALL() + " - " + t.getDescription() + " (Giornaliero)";
 					sql += Util.newLine + "------------------------------------------------------------------------------------------";
-					sql += Util.newLine + String.format("CREATE OR REPLACE VIEW %s AS ", t.getViewName_ALL());
+					sql += Util.newLine + String.format("CREATE OR REPLACE VIEW BEQUEATH DEFINER %s AS ", t.getViewName_ALL());
 					sql += Util.newLine + "(";
 					sql += Util.newLine + " SELECT";
 					bComma = "";
@@ -490,7 +490,7 @@ public class TableModel {
 					sql += Util.newLine + " --Vista senza suffisso _ALL visibile alle banche";
 					sql += Util.newLine + " -- " + t.getViewName() + " - " + t.getDescription() + " (Giornaliero)";
 					sql += Util.newLine + "------------------------------------------------------------------------------------------";
-					sql += Util.newLine + String.format("CREATE OR REPLACE VIEW %s AS ", t.getViewName());
+					sql += Util.newLine + String.format("CREATE OR REPLACE VIEW BEQUEATH DEFINER %s AS ", t.getViewName());
 					sql += Util.newLine + "(";
 					sql += Util.newLine + String.format(" SELECT * FROM %s WHERE ABI_BANCA IN (SELECT ABI FROM GET_ABI()) ", t.getViewName_ALL());
 					sql += Util.newLine + ") WITH CHECK OPTION;" + Util.newLine;
@@ -513,7 +513,7 @@ public class TableModel {
 			if (!createALLView) {
 				sql += Util.newLine + " --" + t.getViewName() + " - " + t.getDescription() + " (Mensile)";
 				sql += Util.newLine + "------------------------------------------------------------------------------------------";
-				sql += Util.newLine + String.format("CREATE OR REPLACE VIEW %s AS ", t.getViewName());
+				sql += Util.newLine + String.format("CREATE OR REPLACE VIEW BEQUEATH DEFINER %s AS ", t.getViewName());
 				sql += Util.newLine + "(";
 				sql += Util.newLine + " SELECT";
 				bComma = "";
@@ -537,7 +537,7 @@ public class TableModel {
 				sql += Util.newLine + " -- Vista con suffisso _ALL NON visibile alle banche";
 				sql += Util.newLine + " --" + t.getViewName_ALL() + " - " + t.getDescription() + " (Mensile)";
 				sql += Util.newLine + "------------------------------------------------------------------------------------------";
-				sql += Util.newLine + String.format("CREATE OR REPLACE VIEW %s AS ", t.getViewName_ALL());
+				sql += Util.newLine + String.format("CREATE OR REPLACE VIEW BEQUEATH DEFINER %s AS ", t.getViewName_ALL());
 				sql += Util.newLine + "(";
 				sql += Util.newLine + " SELECT";
 				bComma = "";
@@ -563,7 +563,7 @@ public class TableModel {
 				sql += Util.newLine + " --Vista senza suffisso _ALL visibile alle banche";
 				sql += Util.newLine + " --" + t.getViewName() + " - " + t.getDescription() + " (Mensile)";
 				sql += Util.newLine + "------------------------------------------------------------------------------------------";
-				sql += Util.newLine + String.format("CREATE OR REPLACE VIEW %s AS ", t.getViewName());
+				sql += Util.newLine + String.format("CREATE OR REPLACE VIEW BEQUEATH DEFINER %s AS ", t.getViewName());
 				sql += Util.newLine + "(";
 				sql += Util.newLine + String.format(" SELECT * FROM %s WHERE ABI_BANCA IN (SELECT ABI FROM GET_ABI()) ", t.getViewName_ALL());
 				sql += Util.newLine + ") WITH CHECK OPTION;" + Util.newLine;
@@ -752,7 +752,7 @@ public class TableModel {
 		sql += String.format("--DDL for View %s" + Util.newLine, t.getViewName());
 		sql += "--------------------------------------------------------" + Util.newLine + Util.newLine;
 
-		sql += String.format("CREATE OR REPLACE VIEW S2A.%s AS" + Util.newLine, t.getViewName());
+		sql += String.format("CREATE OR REPLACE VIEW BEQUEATH DEFINER S2A.%s AS" + Util.newLine, t.getViewName());
 		sql += "(\nSELECT" + Util.newLine;
 		sql += "   ABI_BANCA" + Util.newLine;
 		sql += " ,DATA_RIFERIMENTO" + Util.newLine;
