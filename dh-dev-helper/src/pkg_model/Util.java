@@ -2,6 +2,8 @@ package pkg_model;
 
 import java.sql.ResultSet;
 import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
 
 import oracle.jdbc.OracleConnection;
 
@@ -78,5 +80,28 @@ public class Util {
 		sql += String.format("GRANT INSERT ON S2A.%s TO S2A_WRITE_ROLE ;  " + newLine, name);
 		sql += String.format("GRANT UPDATE ON S2A.%s TO S2A_WRITE_ROLE ;  " + newLine, name);
 		return sql;
+	}
+	
+	public static List<String> GetDailyTables() throws Exception {
+
+		List<String> bRes = new ArrayList<String>();
+		try {
+			OracleConnection conn = OracleConnectionFactory.getConnection();
+			Statement stmt = conn.createStatement();
+			ResultSet rset = stmt.executeQuery(
+					"SELECT REPLACE(REPLACE(PROCEDURE_NAME, 'REBUILD_',''), '_BDT') TAB FROM USER_PROCEDURES WHERE OBJECT_NAME = 'REBUILD_BDT' AND PROCEDURE_NAME LIKE 'REBUILD_%' AND PROCEDURE_NAME <> 'REBUILD_ALL_BDT' AND PROCEDURE_NAME <> 'REBUILD_TABLE' ORDER BY SUBPROGRAM_ID");
+			while (rset.next()) {
+				String t = rset.getString(1);
+				bRes.add(t);
+			}
+
+			rset.close();
+			stmt.close();
+			conn.close();
+			conn = null;
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return bRes;
 	}
 }

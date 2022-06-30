@@ -9,32 +9,9 @@ import oracle.jdbc.OracleConnection;
 
 public class RebuildModel {
 
-	public static List<String> GetDailyTables() throws Exception {
-
-		List<String> bRes = new ArrayList<String>();
-		try {
-			OracleConnection conn = OracleConnectionFactory.getConnection();
-			Statement stmt = conn.createStatement();
-			ResultSet rset = stmt.executeQuery(
-					"SELECT REPLACE(REPLACE(PROCEDURE_NAME, 'REBUILD_',''), '_BDT') TAB FROM USER_PROCEDURES WHERE OBJECT_NAME = 'REBUILD_BDT' AND PROCEDURE_NAME LIKE 'REBUILD_%' AND PROCEDURE_NAME <> 'REBUILD_ALL_BDT' AND PROCEDURE_NAME <> 'REBUILD_TABLE' ORDER BY SUBPROGRAM_ID");
-			while (rset.next()) {
-				String t = rset.getString(1);
-				bRes.add(t);
-			}
-
-			rset.close();
-			stmt.close();
-			conn.close();
-			conn = null;
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		return bRes;
-	}
-
 	public static String CreaRebuildProc() throws Exception {
 
-		List<String> aTabs = RebuildModel.GetDailyTables();
+		List<String> aTabs = Util.GetDailyTables();
 		String sql = "";
 		sql += String.format("PROMPT--->'Creating Package REBUILD_BDT';\n");
 		sql += String.format("--------------------------------------------------------\n");
