@@ -140,7 +140,7 @@ public class TableModel {
 	public String PrimaryKey() throws Exception {
 
 		String s = "";
-		
+
 		if (getIsPartizionamentoMensile())
 			s = "MESE,";
 		else
@@ -149,10 +149,10 @@ public class TableModel {
 
 		for (FieldModel f : getFields()) {
 			if (f.getIsKey()) {
-				if (f.getName().endsWith("DTV")) {				
+				if (f.getName().endsWith("DTV")) {
 					continue;
 				}
-				s += ","+ f.NameQuoted();
+				s += "," + f.NameQuoted();
 			}
 		}
 
@@ -625,7 +625,7 @@ public class TableModel {
 		return sql;
 	}
 
-	public static String CreatabellaDTO(String aTableName, Boolean isPartizionamentoPerMESEParam) throws Exception {
+	public static String CreatabellaDTO(String aTableName, Boolean isPartizionamentoPerMESEParam, boolean aCreateALLView) throws Exception {
 		String tName = aTableName;
 		pkg_model.TableModel t = pkg_model.TableModel.GetTable(tName, false);
 
@@ -715,7 +715,8 @@ public class TableModel {
 		sql += String.format(
 				"ALTER TABLE S2A.DTO_FTNSR001_%s ADD CONSTRAINT DTO_FTNSR001_%s_PK PRIMARY KEY (REMOTE_FILE_NAME, LOCAL_FILE_NAME, ROW_ID, ANNO, ABI_BANCA) USING INDEX DTO_FTNSR001_%s_PK ENABLE;" + Util.newLine,
 				t.getDTOName(), t.getDTOName(), t.getDTOName());
-		sql += String.format("CREATE INDEX  S2A.%s_IDX100 ON DTO_FTNSR001_%s (ANNO, DATA_RIFERIMENTO, ABI_BANCA) COMPRESS ADVANCED HIGH LOCAL TABLESPACE %s;" + Util.newLine, t.getDTOName(), t.getDTOName(), tableSpaceName);
+		sql += String.format("CREATE INDEX  S2A.%s_IDX100 ON DTO_FTNSR001_%s (ANNO, DATA_RIFERIMENTO, ABI_BANCA) COMPRESS ADVANCED HIGH LOCAL TABLESPACE %s;" + Util.newLine, t.getDTOName(), t.getDTOName(),
+				tableSpaceName);
 
 		sql += Util.newLine + "--------------------------------------------------------" + Util.newLine;
 		sql += String.format("--Constraints for Table DTO_FTNSR001_%s  " + Util.newLine, t.getDTOName());
@@ -749,10 +750,21 @@ public class TableModel {
 		sql += Util.getTableGrantString("DTO_FTNSR001_" + t.getDTOName());
 
 		sql += Util.newLine + "--------------------------------------------------------" + Util.newLine;
-		sql += String.format("--DDL for View %s" + Util.newLine, t.getViewName());
+		if (aCreateALLView)
+			sql += String.format("--DDL for View %s" + Util.newLine, t.getViewName_ALL());
+		else
+			sql += String.format("--DDL for View %s" + Util.newLine, t.getViewName());
+
 		sql += "--------------------------------------------------------" + Util.newLine + Util.newLine;
 
-		sql += String.format("CREATE OR REPLACE VIEW S2A.%s BEQUEATH DEFINER AS" + Util.newLine, t.getViewName());
+		// Creazione della vista
+		String bViewName = "?????";
+		if (aCreateALLView)
+			bViewName = t.getViewName_ALL();
+		else
+			bViewName = t.getViewName();
+
+		sql += String.format("CREATE OR REPLACE VIEW S2A.%s BEQUEATH DEFINER AS" + Util.newLine, bViewName);
 		sql += "(\nSELECT" + Util.newLine;
 		sql += "   ABI_BANCA" + Util.newLine;
 		sql += " ,DATA_RIFERIMENTO" + Util.newLine;
@@ -778,22 +790,49 @@ public class TableModel {
 
 		sql += String.format(" FROM\n   DTO_FTNSR001_%s" + Util.newLine, t.getDTOName());
 		sql += " WHERE" + Util.newLine;
-		sql += "       ABI_BANCA IN (SELECT * FROM GET_ABI()) AND STATUS = 'PUBLISHED'" + Util.newLine;
+
+		if (aCreateALLView)
+			sql += "       STATUS = 'PUBLISHED'" + Util.newLine;
+		else
+			sql += "       ABI_BANCA IN (SELECT * FROM GET_ABI()) AND STATUS = 'PUBLISHED'" + Util.newLine;
+
 		sql += ") WITH CHECK OPTION;" + Util.newLine;
-		sql += String.format("\nCOMMENT ON TABLE  S2A.%s IS '%s' ;" + Util.newLine, t.getViewName(), t.getDescription());
-		sql += String.format("COMMENT ON COLUMN S2A.%s.REMOTE_FILE_NAME IS 'Nome del flusso ricevuto da Host' ;" + Util.newLine, t.getViewName());
-		sql += String.format("COMMENT ON COLUMN S2A.%s.LOCAL_FILE_NAME IS 'Nome locale di ricezione' ;" + Util.newLine, t.getViewName());
-		sql += String.format("COMMENT ON COLUMN S2A.%s.ROW_ID IS 'Numero Riga' ;" + Util.newLine, t.getViewName());
-		sql += String.format("COMMENT ON COLUMN S2A.%s.DATA_INSERIMENTO IS 'Data inserimento record' ;" + Util.newLine, t.getViewName());
-		sql += String.format("COMMENT ON COLUMN S2A.%s.STATUS IS 'Status Record' ;" + Util.newLine, t.getViewName());
+		sql += String.format("\nCOMMENT ON TABLE  S2A.%s IS '%s' ;" + Util.newLine, bViewName, t.getDescription());
+		sql += String.format("COMMENT ON COLUMN S2A.%s.REMOTE_FILE_NAME IS 'Nome del flusso ricevuto da Host' ;" + Util.newLine, bViewName);
+		sql += String.format("COMMENT ON COLUMN S2A.%s.LOCAL_FILE_NAME IS 'Nome locale di ricezione' ;" + Util.newLine, bViewName);
+		sql += String.format("COMMENT ON COLUMN S2A.%s.ROW_ID IS 'Numero Riga' ;" + Util.newLine, bViewName);
+		sql += String.format("COMMENT ON COLUMN S2A.%s.DATA_INSERIMENTO IS 'Data inserimento record' ;" + Util.newLine, bViewName);
+		sql += String.format("COMMENT ON COLUMN S2A.%s.STATUS IS 'Status Record' ;" + Util.newLine, bViewName);
 		for (FieldModel f : t.getFields())
-			sql += String.format("COMMENT ON COLUMN S2A.%s.%s IS '%s' ;" + Util.newLine, t.getViewName(), f.getNameS2A(), f.getDescription());
+			sql += String.format("COMMENT ON COLUMN S2A.%s.%s IS '%s' ;" + Util.newLine, bViewName, f.getNameS2A(), f.getDescription());
 		if (contains_SERVIZIO_SEGNALAZIONE) {
-			sql += String.format("COMMENT ON COLUMN S2A.%s.SERVIZIO IS 'Servizio SIB' ;" + Util.newLine, t.getViewName());
-			sql += String.format("COMMENT ON COLUMN S2A.%s.RAPPORTO IS 'Rapporto SIB' ;" + Util.newLine, t.getViewName());
+			sql += String.format("COMMENT ON COLUMN S2A.%s.SERVIZIO IS 'Servizio SIB' ;" + Util.newLine, bViewName);
+			sql += String.format("COMMENT ON COLUMN S2A.%s.RAPPORTO IS 'Rapporto SIB' ;" + Util.newLine, bViewName);
 		}
 
-		sql += Util.getViewGrantString(t.getViewName(), true);
+		if (aCreateALLView)
+			sql += Util.getViewGrantString(bViewName, false);
+		else
+			sql += Util.getViewGrantString(bViewName, true);
+
+		if (aCreateALLView) {
+			// Vista senza suffisso _ALL
+			sql += Util.newLine + " --Vista senza suffisso _ALL visibile alle banche";
+			sql += Util.newLine + " -- " + t.getViewName() + " - " + t.getDescription();
+			sql += Util.newLine + "------------------------------------------------------------------------------------------";
+			sql += Util.newLine + String.format("CREATE OR REPLACE VIEW %s BEQUEATH DEFINER AS ", t.getViewName());
+			sql += Util.newLine + "(";
+			sql += Util.newLine + String.format(" SELECT * FROM %s WHERE ABI_BANCA IN (SELECT ABI FROM GET_ABI()) ", t.getViewName_ALL());
+			sql += Util.newLine + ") WITH CHECK OPTION;" + Util.newLine;
+			sql += String.format(Util.newLine + "COMMENT ON TABLE %s IS '%s';", t.ViewNameQuoted(), t.getDescription());
+
+			for (FieldModel f : t.getFields())
+				if (f.getIsAnalitycs())
+					sql += String.format(Util.newLine + "COMMENT ON COLUMN %s.%s  IS '%s'; ", t.ViewNameQuoted(), f.getNameS2A(), f.getDescription());
+			sql += Util.newLine;
+
+			sql += Util.getViewGrantString(t.getViewName(), true);
+		}
 
 		// file di rollback
 		sql += Util.newLine + "----------------------------------------------------------" + Util.newLine;
@@ -814,6 +853,8 @@ public class TableModel {
 
 		sql += String.format("\nDROP TABLE DTO_FTNSR001_%s CASCADE CONSTRAINTS PURGE;" + Util.newLine, t.getDTOName());
 		sql += String.format("DROP VIEW  %s;" + Util.newLine, t.getViewName());
+		if (aCreateALLView)
+			sql += String.format("DROP VIEW  %s;" + Util.newLine, t.getViewName_ALL());
 
 		// header del package
 		sql += Util.newLine + "----------------------------------------------------------" + Util.newLine;

@@ -75,9 +75,8 @@ public class FrmMain extends JFrame {
 		scrollPane.setViewportView(_rtSql);
 
 		JPanel panel_1 = new JPanel();
-		panel_1.setBorder(new TitledBorder(
-				new EtchedBorder(EtchedBorder.LOWERED, new Color(255, 255, 255), new Color(160, 160, 160)),
-				"Selezione tabella", TitledBorder.LEADING, TitledBorder.TOP, DEFAULT_FONT(), new Color(0, 0, 0)));
+		panel_1.setBorder(new TitledBorder(new EtchedBorder(EtchedBorder.LOWERED, new Color(255, 255, 255), new Color(160, 160, 160)), "Selezione tabella", TitledBorder.LEADING, TitledBorder.TOP, DEFAULT_FONT(),
+				new Color(0, 0, 0)));
 		panel_1.setBounds(7, 11, 304, 128);
 		contentPane.add(panel_1);
 		panel_1.setLayout(null);
@@ -91,7 +90,7 @@ public class FrmMain extends JFrame {
 		chkPartizionamentoPerMese.setBounds(6, 45, 292, 23);
 		panel_1.add(chkPartizionamentoPerMese);
 		chkPartizionamentoPerMese.setFont(DEFAULT_FONT());
-		
+
 		JCheckBox chkALLView = new JCheckBox("Generazione vista _ALL");
 		chkALLView.setFont(new Font("Tahoma", Font.PLAIN, 11));
 		chkALLView.setSelected(true);
@@ -102,8 +101,7 @@ public class FrmMain extends JFrame {
 		}
 
 		JPanel panel = new JPanel();
-		panel.setBorder(
-				new TitledBorder(null, "Creazione", TitledBorder.LEADING, TitledBorder.TOP, DEFAULT_FONT(), null));
+		panel.setBorder(new TitledBorder(null, "Creazione", TitledBorder.LEADING, TitledBorder.TOP, DEFAULT_FONT(), null));
 		panel.setBounds(312, 11, 148, 128);
 		contentPane.add(panel);
 		panel.setLayout(null);
@@ -124,8 +122,7 @@ public class FrmMain extends JFrame {
 		btnCreaRebuilProc.setFont(DEFAULT_FONT());
 
 		JPanel panel_2 = new JPanel();
-		panel_2.setBorder(
-				new TitledBorder(null, "Gestione", TitledBorder.LEADING, TitledBorder.TOP, DEFAULT_FONT(), null));
+		panel_2.setBorder(new TitledBorder(null, "Gestione", TitledBorder.LEADING, TitledBorder.TOP, DEFAULT_FONT(), null));
 		panel_2.setBounds(470, 11, 185, 128);
 		contentPane.add(panel_2);
 		panel_2.setLayout(null);
@@ -158,12 +155,13 @@ public class FrmMain extends JFrame {
 		btnCreaTabellaDTO.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				Boolean isPartizionamentoPerMESE = chkPartizionamentoPerMese.isSelected();
+				Boolean createALLView = chkALLView.isSelected();
 				String sql = "working...";
 				_rtSql.setText(sql);
 				_rtSql.getRootPane().updateUI();
 				try {
 					String aTableName = (String) _cmbTables.getSelectedItem();
-					sql = pkg_model.TableModel.CreatabellaDTO(aTableName, isPartizionamentoPerMESE);
+					sql = pkg_model.TableModel.CreatabellaDTO(aTableName, isPartizionamentoPerMESE, createALLView);
 				} catch (Exception e1) {
 					e1.printStackTrace();
 				}
@@ -181,7 +179,7 @@ public class FrmMain extends JFrame {
 				_rtSql.getRootPane().updateUI();
 				try {
 					String aTableName = (String) _cmbTables.getSelectedItem();
-					sql = pkg_model.TableModel.CreatabellaODS(aTableName, isPartizionamentoPerMESE,createALLView);
+					sql = pkg_model.TableModel.CreatabellaODS(aTableName, isPartizionamentoPerMESE, createALLView);
 				} catch (Exception e1) {
 					e1.printStackTrace();
 				}
