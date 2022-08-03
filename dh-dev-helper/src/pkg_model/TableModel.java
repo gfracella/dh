@@ -595,6 +595,14 @@ public class TableModel {
 			sql += Util.newLine + " ---BDT STORED PROCEDURE >>>>>>>>>>>>>>>>>>>>>>>>>>>";
 			sql += Util.newLine + " ---BDT STORED PROCEDURE >>>>>>>>>>>>>>>>>>>>>>>>>>>";
 			sql += t.CreateRebuildProcedure(t);
+
+			// Stored procedure di creazione tabelle BDT (versione V2)
+			sql += Util.newLine + Util.newLine + Util.newLine;
+			sql += Util.newLine + " ---BDT STORED PROCEDURE V2 >>>>>>>>>>>>>>>>>>>>>>>>>>>";
+			sql += Util.newLine + " ---BDT STORED PROCEDURE V2 >>>>>>>>>>>>>>>>>>>>>>>>>>>";
+			sql += Util.newLine + " ---BDT STORED PROCEDURE V2 >>>>>>>>>>>>>>>>>>>>>>>>>>>";
+			sql += t.CreateRebuildProcedureV2(t);
+
 		}
 
 		return sql;
@@ -605,7 +613,6 @@ public class TableModel {
 
 		TableBDTModel bdt = t.getDBTTable(t.getIsPartizionamentoMensile());
 
-		sql += Util.newLine + "ATTENZIONE Da copiare nella definizione dell'interfaccia..." + Util.newLine + Util.newLine;
 		sql += Util.newLine + "------HEADER -->";
 		sql += String.format(Util.newLine + "PROCEDURE REBUILD_%s(nrofdays IN INT); ", bdt.getName());
 
@@ -625,6 +632,29 @@ public class TableModel {
 		return sql;
 	}
 
+	private String CreateRebuildProcedureV2(TableModel t) {
+		String sql = "";
+
+		TableBDTModel bdt = t.getDBTTable(t.getIsPartizionamentoMensile());
+
+		sql += Util.newLine + "------HEADER -->";				
+		sql += String.format(Util.newLine + "PROCEDURE REBUILD_%s_BDT(anAbi IN VARCHAR2, aDateFrom IN DATE, aDateTo IN DATE, aDeleteExistingRecords IN VARCHAR2);", bdt.getName());
+		
+		sql += Util.newLine + "-";
+		sql += Util.newLine + "-";
+		sql += Util.newLine + "------BODY -->";
+
+		sql += Util.newLine + "------------------------------------------------------------------------------------------";
+		sql += String.format(Util.newLine + "  -- Ricostruzione della tabella %s (%s By Day Table)", bdt.getName(), t.getName());
+		sql += Util.newLine + "------------------------------------------------------------------------------------------";
+
+		sql += String.format(Util.newLine + "PROCEDURE REBUILD_%s_BDT(anAbi IN VARCHAR2, aDateFrom IN DATE, aDateTo IN DATE, aDeleteExistingRecords IN VARCHAR2) ", bdt.getName());		
+		sql += String.format(Util.newLine + "IS");
+		sql += String.format(Util.newLine + "BEGIN");
+		sql += String.format(Util.newLine + "    dbms_output.put_line('todo...');");
+		sql += String.format(Util.newLine + "END;");
+		return sql;
+	}
 	public static String CreatabellaDTO(String aTableName, Boolean isPartizionamentoPerMESEParam, boolean aCreateALLView) throws Exception {
 		String tName = aTableName;
 		pkg_model.TableModel t = pkg_model.TableModel.GetTable(tName, false);

@@ -77,7 +77,7 @@ public class FrmMain extends JFrame {
 		JPanel panel_1 = new JPanel();
 		panel_1.setBorder(new TitledBorder(new EtchedBorder(EtchedBorder.LOWERED, new Color(255, 255, 255), new Color(160, 160, 160)), "Selezione tabella", TitledBorder.LEADING, TitledBorder.TOP, DEFAULT_FONT(),
 				new Color(0, 0, 0)));
-		panel_1.setBounds(7, 11, 304, 128);
+		panel_1.setBounds(7, 11, 304, 138);
 		contentPane.add(panel_1);
 		panel_1.setLayout(null);
 
@@ -102,28 +102,47 @@ public class FrmMain extends JFrame {
 
 		JPanel panel = new JPanel();
 		panel.setBorder(new TitledBorder(null, "Creazione", TitledBorder.LEADING, TitledBorder.TOP, DEFAULT_FONT(), null));
-		panel.setBounds(312, 11, 148, 128);
+		panel.setBounds(312, 11, 148, 138);
 		contentPane.add(panel);
 		panel.setLayout(null);
 
 		JButton btnCreaTabellaODS = new JButton("Tabella ODS");
-		btnCreaTabellaODS.setBounds(6, 16, 136, 23);
+		btnCreaTabellaODS.setBounds(10, 14, 120, 23);
 		panel.add(btnCreaTabellaODS);
 		btnCreaTabellaODS.setFont(DEFAULT_FONT());
 
 		JButton btnCreaTabellaDTO = new JButton("Tabella DTO");
-		btnCreaTabellaDTO.setBounds(6, 43, 136, 23);
+		btnCreaTabellaDTO.setBounds(10, 44, 120, 23);
 		panel.add(btnCreaTabellaDTO);
 		btnCreaTabellaDTO.setFont(DEFAULT_FONT());
 
 		JButton btnCreaRebuilProc = new JButton("Rebuild");
-		btnCreaRebuilProc.setBounds(6, 70, 136, 23);
+		btnCreaRebuilProc.setBounds(10, 74, 120, 23);
 		panel.add(btnCreaRebuilProc);
 		btnCreaRebuilProc.setFont(DEFAULT_FONT());
+		
+		JButton btnCreaRebuilProcV2 = new JButton("Rebuild V2");
+		btnCreaRebuilProcV2.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {				
+				String sql = "working...";
+				_rtSql.setText(sql);
+				try {
+					sql = pkg_model.RebuildV2Model.CreaRebuildProc();
+				} catch (Exception e1) {
+					e1.printStackTrace();
+				}
+				_rtSql.setText(sql);
+				_rtSql.setCaretPosition(0);
+				
+			}
+		});
+		btnCreaRebuilProcV2.setFont(new Font("Tahoma", Font.PLAIN, 11));
+		btnCreaRebuilProcV2.setBounds(10, 104, 120, 23);
+		panel.add(btnCreaRebuilProcV2);
 
 		JPanel panel_2 = new JPanel();
 		panel_2.setBorder(new TitledBorder(null, "Gestione", TitledBorder.LEADING, TitledBorder.TOP, DEFAULT_FONT(), null));
-		panel_2.setBounds(470, 11, 185, 128);
+		panel_2.setBounds(470, 11, 185, 138);
 		contentPane.add(panel_2);
 		panel_2.setLayout(null);
 
