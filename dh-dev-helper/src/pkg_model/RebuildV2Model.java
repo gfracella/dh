@@ -31,6 +31,7 @@ public class RebuildV2Model {
 		sql += String.format("AS\n");
 		sql += String.format("   -- Dichiarazione del package REBUILD_BDT_V2\n");
 		sql += String.format("\n");
+		sql += String.format("    PROCEDURE REBUILD_TABLE (aTableName IN VARCHAR2, anAbi IN VARCHAR2, aDateFrom IN DATE, aDateTo IN DATE, aDeleteExistingRecords IN VARCHAR2);\n");
 		sql += String.format("    PROCEDURE REBUILD_ALL_BDT(anAbi IN VARCHAR2, aDateFrom IN DATE, aDateTo IN DATE, aDeleteExistingRecords IN VARCHAR2);\n");
 
 		for (int i = 0; i < aTabs.size(); i++) {
@@ -53,6 +54,28 @@ public class RebuildV2Model {
 		sql += String.format("------------- INIZIO PACKAGE ----------------------\n");
 		sql += String.format("\n");
 		sql += String.format("\n");
+				
+		
+		sql += String.format("PROCEDURE REBUILD_TABLE(aTableName IN VARCHAR2, anAbi IN VARCHAR2, aDateFrom IN DATE, aDateTo IN DATE, aDeleteExistingRecords IN VARCHAR2)\n");
+		sql += String.format("IS\n");
+		sql += String.format("    b_bdt_table_name VARCHAR2(128);\n");
+		sql += String.format("    b_sql  VARCHAR2(128);\n");
+		sql += String.format("    b_count int;\n");
+		sql += String.format("BEGIN\n");
+		sql += String.format("    S2A.LOG_MANAGER.LOG_INFO('REBUILD_TABLE...',  aTableName || ',' || anAbi || ',' || to_char(aDateFrom) || ',' || to_char(aDateTo) || ',' || aDeleteExistingRecords, null);\n");
+		sql += String.format("    b_count := 0;\n");
+		sql += String.format("    b_bdt_table_name := upper(aTableName) || '_BDT';\n");
+		sql += String.format("    select count(*) into b_count from user_tables where table_name = b_bdt_table_name;\n");
+		sql += String.format("    IF b_count>0 THEN\n");
+		sql += String.format("        b_sql:='BEGIN S2A.REBUILD_BDT_V2.REBUILD_' || b_bdt_table_name || '(:anAbi,:aDateFrom,:aDateTo,:aDeleteExistingRecords) ; END;';\n");
+		sql += String.format("        S2A.LOG_MANAGER.LOG_INFO('REBUILD_TABLE sqlcmd',  aTableName || ',' || anAbi || ',' || to_char(aDateFrom) || ',' || to_char(aDateTo) || ',' || aDeleteExistingRecords, b_sql);\n");
+		sql += String.format("        execute immediate b_sql using anAbi, aDateFrom,aDateTo,aDeleteExistingRecords;\n");
+		sql += String.format("    END IF;\n");
+		sql += String.format("    S2A.LOG_MANAGER.LOG_INFO('REBUILD_TABLE OK',  aTableName || ',' || anAbi || ',' || to_char(aDateFrom) || ',' || to_char(aDateTo) || ',' || aDeleteExistingRecords, null);\n");
+		sql += String.format("END REBUILD_TABLE;\n\n\n");
+
+		
+		
 		sql += String.format("PROCEDURE REBUILD_ALL_BDT(anAbi IN VARCHAR2, aDateFrom IN DATE, aDateTo IN DATE, aDeleteExistingRecords IN VARCHAR2)\n");
 		sql += String.format("IS\n");
 		sql += String.format("    v_sql VARCHAR2(512);\n");
@@ -69,6 +92,7 @@ public class RebuildV2Model {
 			OracleCatalogTableModel tabObj = new OracleCatalogTableModel(tab);
 
 			if (!tabObj.getName().equals("SD51T")) {
+				sql += String.format("\n\n");
 				sql += String.format("-- CALCULATE_LAST_FULL_IMPORT_DATE_%s - Calcola la data relativa all'ultima importazione FULL (%s).\n", tabObj.getName(), tabObj.getName());
 				sql += String.format("FUNCTION CALCULATE_LAST_FULL_IMPORT_DATE_%s(anAbiIn VARCHAR2, aDatain DATE) RETURN DATE IS\n", tabObj.getName());
 				sql += String.format("bLastFull DATE;\n");
